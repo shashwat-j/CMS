@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 
-const serverLocation = 'http://localhost:4567'
+const serverLocation = 'https://cms-usry.onrender.com'
 
 function Video() {
 
@@ -15,7 +15,7 @@ function Video() {
         try{
         console.log("calling api now")
         
-        axios.get(`http://localhost:4567/api/video?videoId=${videoId}`)
+        axios.get(`https://cms-usry.onrender.com/api/video?videoId=${videoId}`)
         .then((response)=>{
             const obj = response.data
             console.log(obj)

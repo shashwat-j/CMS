@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CollectionCard from '../components/CollectionCard';  
-import axios from 'axios';
+import CollectionCard from '../components/CollectionCard'  
+import axios from 'axios'
+
+const serverLocation = 'https://cms-usry.onrender.com'//or localhost 4567
 
 const Home = () => {
 
@@ -11,7 +13,7 @@ const Home = () => {
         try{
             console.log("calling api now")
         
-        axios.get('http://localhost:4567/api/collections')
+        axios.get(`${serverLocation}/api/collections`)
         .then((response)=>{
             const obj = response.data
             console.log(obj)

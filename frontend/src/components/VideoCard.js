@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const serverLocation = 'http://localhost:4567'
+const serverLocation = 'https://cms-usry.onrender.com'
 
 const VideoCard = ({video}) => {
 

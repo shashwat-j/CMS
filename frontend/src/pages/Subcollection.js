@@ -17,7 +17,7 @@ const Subcollection = () => {
           try{
           console.log("calling api now")
           
-          axios.get(`http://localhost:4567/api/videos?parentSubcollectionId=${subcollectionId}`)
+          axios.get(`https://cms-usry.onrender.com/api/videos?parentSubcollectionId=${subcollectionId}`)
           .then((response)=>{
               const obj = response.data
               console.log(obj)
