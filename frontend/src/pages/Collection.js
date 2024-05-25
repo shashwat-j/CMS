@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import CollectionCard from '../components/CollectionCard';
+import axios from 'axios';
 
 
 
@@ -8,33 +9,36 @@ const Collection = () => {
 
   const [searchParams] = useSearchParams();
   const collectionName = searchParams.get("collectionName");
+  const collectionId = searchParams.get("collectionId");
 
-  //fetch that collection from backend
-  const collection = {
-    id: 'animals',
-    name: 'Animals',
-    subcollections: [
-      {
-        id: 'mammals',
-        name: 'Mammals',
-        videos: ['video1.mp4', 'video2.mp4']
-      },
-      {
-        id: 'birds',
-        name: 'Birds',
-        videos: ['video3.mp4', 'video4.mp4']
-      }
-    ]
-  }
+  
+  const [subcollections, setSubcollections] = useState([])
+
+    const callApi = async()=>{
+        try{
+        console.log("calling api now")
+        
+        axios.get(`http://localhost:4567/api/subcollections?parentCollectionId=${collectionId}`)
+        .then((response)=>{
+            const obj = response.data
+            console.log(obj)
+            setSubcollections(obj.subcollections)
+        })
+        } catch(error){
+        console.log(error.response)
+        }
+    }
+
+    useEffect(()=>{callApi()}, [])
 
   return (
     <>
         <div className='bg-gray-900 flex flex-col text-center text-white items-center min-h-screen'>
             <section className='mt-10  w-full'>
-                <h3 className='text-xl'>Subcollections</h3>
+                <h3 className='text-xl'>Subcollections Under {collectionName??'this collection'}</h3>
                 <div className=' w-[80%] mx-auto flex flex-wrap items-center justify-center mt-8 gap-5'>
                     {
-                        collection?.subcollections?.map((subcollection)=>(
+                        subcollections?.map((subcollection)=>(
                             <CollectionCard key={subcollection.id} subcollection={subcollection}/>
                         ))
                     }
