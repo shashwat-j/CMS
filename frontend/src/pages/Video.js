@@ -15,7 +15,7 @@ function Video() {
         try{
         console.log("calling api now")
         
-        axios.get(`https://cms-usry.onrender.com/api/video?videoId=${videoId}`)
+        axios.get(`${process.env.REACT_APP_SERVER_LOCATION}/api/video?videoId=${videoId}`)
         .then((response)=>{
             const obj = response.data
             console.log(obj)
@@ -31,10 +31,10 @@ function Video() {
   return (
     <div className='w-full mt-10 flex justify-center items-center'>       
         {/* <video className="w-full max-w-[700px]"  controls>
-        <source src={`${serverLocation}/${video?.url}`} type="video/mp4"/>
+        <source src={`${process.env.REACT_APP_SERVER_LOCATION}/${video?.url}`} type="video/mp4"/>
         Your browser does not support the video tag.
         </video> */}
-        <video className='w-full max-w-[700px]' src={`${serverLocation}/${video?.url}`} type='video/mp4' controls autoPlay/>
+        <video className='w-full max-w-[700px]' src={`${process.env.REACT_APP_SERVER_LOCATION}/${video?.url}`} type='video/mp4' controls autoPlay/>
     </div>
   )
 }

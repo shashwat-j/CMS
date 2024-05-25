@@ -13,7 +13,7 @@ const Home = () => {
         try{
             console.log("calling api now")
         
-        axios.get(`${serverLocation}/api/collections`)
+        axios.get(`${process.env.REACT_APP_SERVER_LOCATION}/api/collections`)
         .then((response)=>{
             const obj = response.data
             console.log(obj)

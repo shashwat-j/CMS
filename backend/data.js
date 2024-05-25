@@ -275,6 +275,54 @@ const videos = [
         img: 'country3.jpg',
         url: 'video2.mp4'
     },
+    {
+        id: '25',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '1',
+        name: 'Best of Europe',
+        img: 'country2.jpg',
+        url: 'video2.mp4'
+    },
+    {
+        id: '26',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '1',
+        name: 'New Gadgets',
+        img: 'country2.jpg',
+        url: 'video1.mp4'
+    },
+    {
+        id: '27',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '2',
+        name: 'New Gadgets',
+        img: 'country3.jpg',
+        url: 'video2.mp4'
+    },
+    {
+        id: '28',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '2',
+        name: 'Asian Culture',
+        img: 'country3.jpg',
+        url: 'video2.mp4'
+    },
+    {
+        id: '29',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '3',
+        name: 'Asian Culture',
+        img: 'country3.jpg',
+        url: 'video2.mp4'
+    },
+    {
+        id: '30',
+        ParentSubcollectionId: '0',
+        ParentCollectionId: '4',
+        name: 'New Gadgets',
+        img: 'country3.jpg',
+        url: 'video2.mp4'
+    }
 ]
 
 

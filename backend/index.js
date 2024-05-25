@@ -29,7 +29,11 @@ app.get('/api/subcollections',(req, res)=>{
     const filteredSubcollections = subcollections.filter((subcollection)=>{
         return subcollection.ParentCollectionId === parentId
     })
-    res.json({subcollections: filteredSubcollections})
+
+    const orphanVideos = videos.filter((video)=>{
+        return video.ParentSubcollectionId === '0' && video.ParentCollectionId === parentId
+    })
+    res.json({subcollections: filteredSubcollections, videos: orphanVideos})
 })
 
 app.get('/api/videos', (req, res)=>{

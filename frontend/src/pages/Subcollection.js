@@ -17,7 +17,7 @@ const Subcollection = () => {
           try{
           console.log("calling api now")
           
-          axios.get(`https://cms-usry.onrender.com/api/videos?parentSubcollectionId=${subcollectionId}`)
+          axios.get(`${process.env.REACT_APP_SERVER_LOCATION}/api/videos?parentSubcollectionId=${subcollectionId}`)
           .then((response)=>{
               const obj = response.data
               console.log(obj)
@@ -26,6 +26,10 @@ const Subcollection = () => {
           } catch(error){
           console.log(error.response)
           }
+      }
+
+      const addVideo = ()=>{
+
       }
   
       useEffect(()=>{callApi()}, [])
@@ -40,6 +44,7 @@ const Subcollection = () => {
                             <VideoCard key={video.id} video={video}/>
                         ))
                     }
+                    <span onClick={()=>{addVideo()}} className="py-6 px-10 rounded-full bg-gray-400 font-bold text-7xl flex items-center justify-center text-gray-600 cursor-pointer mb-8 md:mb-0">+</span>
                 </div>
             </section>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import CollectionCard from '../components/CollectionCard';
 import axios from 'axios';
+import VideoCard from '../components/VideoCard';
 
 
 
@@ -13,16 +14,18 @@ const Collection = () => {
 
   
   const [subcollections, setSubcollections] = useState([])
+  const [videos, setVideos] = useState([])
 
     const callApi = async()=>{
         try{
         console.log("calling api now")
         
-        axios.get(`https://cms-usry.onrender.com/api/subcollections?parentCollectionId=${collectionId}`)
+        axios.get(`${process.env.REACT_APP_SERVER_LOCATION}/api/subcollections?parentCollectionId=${collectionId}`)
         .then((response)=>{
             const obj = response.data
             console.log(obj)
             setSubcollections(obj.subcollections)
+            setVideos(obj.videos)
         })
         } catch(error){
         console.log(error.response)
@@ -41,6 +44,13 @@ const Collection = () => {
                         subcollections?.map((subcollection)=>(
                             <CollectionCard key={subcollection.id} subcollection={subcollection}/>
                         ))
+                    }
+                </div>
+                <div className=' w-[80%] mx-auto flex flex-wrap items-center justify-center mt-8 gap-5'>
+                    {
+                      videos?.map((video)=>(
+                        <VideoCard key={video.id} video={video}/>
+                      ))
                     }
                 </div>
             </section>
