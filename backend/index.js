@@ -39,3 +39,13 @@ app.get('/api/videos', (req, res)=>{
     })
     res.json({videos : filteredVideos})
 })
+
+app.get('/api/video', (req, res)=>{
+    const videoId = req.query.videoId
+    console.log(videoId)
+    const video = videos.filter((video)=>{
+        return video.id === videoId
+    })
+    console.log(video[0])
+    res.json({video : video[0]})
+})
