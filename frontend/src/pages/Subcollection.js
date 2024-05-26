@@ -10,6 +10,7 @@ const Subcollection = () => {
 
     const subcollectionId = searchParams.get("subcollectionId");
 
+    const [selectedFile, setSelectedFile] = useState(null);
   
     const [videos, setVideos] = useState([])
   
@@ -28,8 +29,20 @@ const Subcollection = () => {
           }
       }
 
-      const addVideo = ()=>{
+      const onFileChange = (event)=>{
+        setSelectedFile(event.target.files[0]);
+      }
 
+      const onFileUpload = ()=>{
+        const formData = new FormData();
+        formData.append("myFile", selectedFile, selectedFile.name);
+    
+        console.log(selectedFile);
+    
+        axios.post(`${process.env.REACT_APP_SERVER_LOCATION}/api/upload`, formData)
+        .then(()=>{
+            axios.post(`${process.env.REACT_APP_SERVER_LOCATION}/api/updateDatabase`, {name: selectedFile?.name, parentSubcollectionId: subcollectionId})
+        });
       }
   
       useEffect(()=>{callApi()}, [])
@@ -44,7 +57,24 @@ const Subcollection = () => {
                             <VideoCard key={video.id} video={video}/>
                         ))
                     }
-                    <span onClick={()=>{addVideo()}} className="py-6 px-10 rounded-full bg-gray-400 font-bold text-7xl flex items-center justify-center text-gray-600 cursor-pointer mb-8 md:mb-0">+</span>
+                    {/* <input type="file" onClick={()=>{addVideo()}} className="py-6 px-10 rounded-full bg-gray-400 font-bold text-7xl flex items-center justify-center text-gray-600 cursor-pointer mb-8 md:mb-0"></input> */}
+                   <div>
+                     <input type="file" onChange={onFileChange} className='rounded-lg' />
+                     <button onClick={onFileUpload} className='bg-gray-200 text-black rounded-lg p-1'>Upload!</button>
+                     {
+                    selectedFile? 
+                        <div>
+                        <h2>File Details:</h2>
+                        <p>File Name: {selectedFile.name}</p>
+                        <p>File Type: {selectedFile.type}</p>
+                        </div>
+                    :
+                        <div>
+                        <br />
+                        <h4 className='font-semibold'>Upload your own files!</h4>
+                        </div>
+                    }
+                  </div>
                 </div>
             </section>
 

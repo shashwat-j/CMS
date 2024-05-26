@@ -1,4 +1,7 @@
 const express = require('express')
+const path = require("path");
+const multer = require("multer");
+const fs = require('fs')
 
 const app = express()
 const PORT = 4567
@@ -18,7 +21,8 @@ app.listen(PORT, (error) =>{
 );
 
 
-const {collections, subcollections, videos} = require('./data')
+const {collections, subcollections} = require('./data')
+const videos = require('./videos.json')
 
 app.get('/api/collections', (req, res)=>{
     res.json({collections: collections})
@@ -52,4 +56,84 @@ app.get('/api/video', (req, res)=>{
     })
     console.log(video[0])
     res.json({video : video[0]})
+})
+
+
+// var upload = multer({ dest: "userUploads/" })
+const maxSize = 5 * 1000 * 1000;
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public");
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    },
+});
+
+// filename: function (req, file, cb) {
+//     cb(null, file.fieldname + "-" + Date.now() + ".mp4");
+// },
+
+
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: maxSize },
+    fileFilter: function (req, file, cb) {
+        var filetypes = /mp4/;
+        var mimetype = filetypes.test(file.mimetype);
+ 
+        var extname = filetypes.test(
+            path.extname(file.originalname).toLowerCase()
+        );
+ 
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+ 
+        cb(
+            "Error: we only support mp4"
+        );
+    },
+ 
+}).single("myFile");
+
+app.post("/api/upload", (req, res, next) => {
+    
+    upload(req, res, (err) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send("done");
+        }
+    });
+});
+
+// app.post('/api/upload', upload.single('myFile'), (req, res) => {
+//     try {
+//       res.send(req.file);
+//     }catch(err) {
+//       res.send(400);
+//     }
+//   });
+
+app.post('/api/updateDatabase', (req, res)=>{
+
+    const id = (videos.length + 1).toString()
+
+    const obj =  {
+        id: id,
+        ParentSubcollectionId: req.body.parentSubcollectionId,
+        name: req.body.name,
+        img: 'country3.jpg',
+        url: req.body.name
+    }
+    
+    console.log(obj)
+
+    videos.push(obj)
+
+    fs.writeFileSync('./videos.json', JSON.stringify(videos))
+
+
 })
